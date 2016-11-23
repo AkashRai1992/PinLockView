@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 /**
  * Represents a numeric lock view which can used to taken numbers as input.
@@ -18,7 +19,7 @@ import android.util.AttributeSet;
  */
 public class PinLockView extends RecyclerView {
 
-    private static final int DEFAULT_PIN_LENGTH = 4;
+    private static final int DEFAULT_PIN_LENGTH = Integer.MAX_VALUE;
 
     private String mPin = "";
     private int mPinLength;
@@ -28,7 +29,7 @@ public class PinLockView extends RecyclerView {
     private Drawable mButtonBackgroundDrawable;
     private Drawable mDeleteButtonDrawable;
     private boolean mShowDeleteButton;
-
+   private  EditText mEditView;
     private IndicatorDots mIndicatorDots;
     private PinLockAdapter mAdapter;
     private PinLockListener mPinLockListener;
@@ -40,7 +41,7 @@ public class PinLockView extends RecyclerView {
             String key = getData(position);
             if (mPin.length() < getPinLength()) {
                 mPin = mPin.concat(key);
-
+             mEditView.setText(mPin);
                 if (isIndicatorDotsAttached()) {
                     mIndicatorDots.updateDot(mPin.length());
                 }
@@ -61,7 +62,7 @@ public class PinLockView extends RecyclerView {
                 if (!isShowDeleteButton()) {
                     resetPinLockView();
                     mPin = mPin.concat(key);
-
+                    mEditView.setText(mPin);
                     if (isIndicatorDotsAttached()) {
                         mIndicatorDots.updateDot(mPin.length());
                     }
@@ -84,7 +85,7 @@ public class PinLockView extends RecyclerView {
         public void onDeleteClicked() {
             if (mPin.length() > 0) {
                 mPin = mPin.substring(0, mPin.length() - 1);
-
+                mEditView.setText(mPin);
                 if (isIndicatorDotsAttached()) {
                     mIndicatorDots.updateDot(mPin.length());
                 }
@@ -412,5 +413,9 @@ public class PinLockView extends RecyclerView {
         if (position == 10)
             return "0";
         return String.valueOf((position + 1) % 10);
+    }
+
+    public void attachEditText(EditText editView) {
+        mEditView=editView;
     }
 }

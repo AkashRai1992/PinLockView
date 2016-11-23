@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
@@ -16,6 +17,7 @@ public class SampleActivity extends AppCompatActivity {
 
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
+    private EditText mEditView;
 
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
@@ -40,14 +42,15 @@ public class SampleActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sample);
-
+        mEditView=(EditText)findViewById(R.id.et_pin_view);
         mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
         mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
 
-        mPinLockView.attachIndicatorDots(mIndicatorDots);
+        mPinLockView.attachEditText(mEditView);
+       /* mPinLockView.attachIndicatorDots(mIndicatorDots);*/
         mPinLockView.setPinLockListener(mPinLockListener);
 
-        mPinLockView.setPinLength(6);
+        /*mPinLockView.setPinLength(6);*/
         mPinLockView.setTextColor(getResources().getColor(R.color.white));
     }
 }
